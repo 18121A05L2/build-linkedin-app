@@ -11,9 +11,7 @@ import { useSelector,useDispatch } from 'react-redux';
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const name = useSelector(state => state.name);
-  const email = useSelector(state => state.email);
-  const photo = useSelector(state => state.photo);
+
   
   function handleAuth(){
     signInWithPopup(auth,provider)
