@@ -2,15 +2,34 @@ import React from 'react'
 import styled from 'styled-components';
 import { FcGoogle } from "react-icons/fc";
 import {auth,signInWithPopup,provider} from "../Firebase"
+import { useNavigate } from 'react-router-dom';
+import { setUserLoginDetails } from '../features/user';
+import { useSelector,useDispatch } from 'react-redux';
 
 
 
 export default function Login() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const name = useSelector(state => state.name);
+  const email = useSelector(state => state.email);
+  const photo = useSelector(state => state.photo);
   
   function handleAuth(){
     signInWithPopup(auth,provider)
-    .then(res => console.log(res))
+    .then(res => {
+      setUser(res.user)
+      navigate("home")
+    })
     .catch(err => console.log(err))
+      
+  }
+  function setUser(data){
+    dispatch(setUserLoginDetails({
+      email: data.email,
+      name: data.displayName,
+      photo: data.photoURL,
+    }))
   }
   return (
     <Lpage>
